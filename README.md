@@ -1,6 +1,6 @@
-# OmniAuth Box Strategy
+# OmniAuth Dropbox Strategy
 
-This gem provides a simple way to authenticate to Box using OmniAuth with OAuth2.
+This gem provides a simple way to authenticate to Dropbox using OmniAuth with OAuth2.
 
 ## Installation
 
