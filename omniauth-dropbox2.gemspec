@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Omniauth::Box2::VERSION
   gem.authors       = ["Claudio Poli"]
   gem.email         = ["masterkain@gmail.com\n"]
-  gem.description   = %q{OmniAuth strategy for Box}
-  gem.summary       = %q{OmniAuth strategy for Box}
+  gem.description   = %q{OmniAuth strategy for Dropbox using OAuth2}
+  gem.summary       = %q{OmniAuth strategy for Dropbox using OAuth2}
   gem.homepage      = "https://github.com/masterkain/omniauth-dropbox2"
 
   gem.files         = `git ls-files`.split($/)
