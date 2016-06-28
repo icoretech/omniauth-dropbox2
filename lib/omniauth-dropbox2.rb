@@ -11,7 +11,8 @@ module OmniAuth
       option :client_options, {
         :site          => 'https://api.dropbox.com/2',
         :authorize_url => 'https://www.dropbox.com/oauth2/authorize',
-        :token_url     => 'https://api.dropbox.com/oauth2/token'
+        :token_url     => 'https://api.dropbox.com/oauth2/token',
+        :connection_opts => { :headers => { :user_agent => "Omniauth-Dropbox2", :accept => "application/json", :content_type => "application/json" } }
       }
 
       # These are called after authentication has succeeded. If
