@@ -9,9 +9,9 @@ module OmniAuth
       # This is where you pass the options you would pass when
       # initializing your consumer from the OAuth gem.
       option :client_options, {
-        :site          => 'https://api.dropbox.com/1',
-        :authorize_url => 'https://www.dropbox.com/1/oauth2/authorize',
-        :token_url     => 'https://api.dropbox.com/1/oauth2/token',
+        :site          => 'https://api.dropbox.com/2',
+        :authorize_url => 'https://www.dropbox.com/oauth2/authorize',
+        :token_url     => 'https://api.dropbox.com/oauth2/token'
       }
 
       # These are called after authentication has succeeded. If
@@ -34,7 +34,7 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('account/info').parsed
+        @raw_info ||= access_token.get('users/get_current_account').parsed
       end
     end
   end
