@@ -19,7 +19,7 @@ module OmniAuth
       # additional calls (if the user id is returned with the token
       # or as a URI parameter). This may not be possible with all
       # providers.
-      uid { aw_info['account_id'] }
+      uid { raw_info['account_id'] }
 
       info do
         {
