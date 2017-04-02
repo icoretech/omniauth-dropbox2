@@ -36,6 +36,24 @@ module OmniAuth
       def raw_info
         @raw_info ||= access_token.post('users/get_current_account', body: nil.to_json).parsed
       end
+
+      def callback_url
+        # If redirect_uri is configured in token_params, use that
+        # value.
+        token_params.to_hash(symbolize_keys: true)[:redirect_uri] || super
+      end
+
+      def query_string
+        # This method is called by callback_url, only if redirect_uri
+        # is omitted in token_params.
+        if request.params['code']
+          # If this is a callback, ignore query parameters added by
+          # the provider.
+          ''
+        else
+          super
+        end
+      end
     end
   end
 end
