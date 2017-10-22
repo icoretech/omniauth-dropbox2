@@ -9,10 +9,10 @@ module OmniAuth
       # This is where you pass the options you would pass when
       # initializing your consumer from the OAuth gem.
       option :client_options,
-             site: 'https://api.dropbox.com/2',
-             authorize_url: 'https://www.dropbox.com/oauth2/authorize',
-             token_url: 'https://api.dropbox.com/oauth2/token',
-             connection_opts: { headers: { user_agent: 'Omniauth-Dropbox2', accept: 'application/json', content_type: 'application/json' } }
+        site: 'https://api.dropbox.com/2',
+        authorize_url: 'https://www.dropbox.com/oauth2/authorize',
+        token_url: 'https://api.dropbox.com/oauth2/token',
+        connection_opts: { headers: { user_agent: 'Omniauth-Dropbox2', accept: 'application/json', content_type: 'application/json' } }
 
       # These are called after authentication has succeeded. If
       # possible, you should try to set the UID without making
@@ -38,10 +38,18 @@ module OmniAuth
       end
 
       def callback_url
-        # If redirect_uri is configured in token_params, use that
-        # value.
-        token_params.to_hash(symbolize_keys: true)[:redirect_uri] || super
+        if @authorization_code_from_signed_request
+          ''
+        else
+          options[:callback_url] || super
+        end
       end
+
+      # def callback_url
+      #   # If redirect_uri is configured in token_params, use that
+      #   # value.
+      #   token_params.to_hash(symbolize_keys: true)[:redirect_uri] || super
+      # end
 
       def query_string
         # This method is called by callback_url, only if redirect_uri
