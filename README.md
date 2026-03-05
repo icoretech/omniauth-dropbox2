@@ -29,6 +29,15 @@ use OmniAuth::Builder do
 end
 ```
 
+## Provider App Setup
+
+- Dropbox app console: <https://www.dropbox.com/developers/apps>
+- Register callback URL (example): `https://your-app.example.com/auth/dropbox/callback`
+
+## Options
+
+- Request-phase query options can be passed directly to `/auth/dropbox` when supported by Dropbox OAuth endpoints.
+
 ## Auth Hash
 
 Example payload from `request.env['omniauth.auth']` (real flow shape, anonymized):
@@ -38,6 +47,12 @@ Example payload from `request.env['omniauth.auth']` (real flow shape, anonymized
   "uid": "dbid:sample-account-id",
   "info": {
     "name": "Sample User"
+  },
+  "credentials": {
+    "token": "sample-access-token",
+    "refresh_token": "sample-refresh-token",
+    "expires": false,
+    "scope": "files.metadata.read"
   },
   "extra": {
     "raw_info": {
@@ -72,6 +87,7 @@ Example payload from `request.env['omniauth.auth']` (real flow shape, anonymized
 Notes:
 - `uid` is mapped from `raw_info.account_id`
 - `info.name` is mapped from `raw_info.name.display_name`
+- `credentials` includes `token`, plus `refresh_token` when provided by Dropbox
 - `extra.raw_info` is the full `users/get_current_account` response
 
 ## Development
@@ -92,6 +108,12 @@ Run Rails integration tests with an explicit Rails version:
 RAILS_VERSION='~> 8.1.0' bundle install
 RAILS_VERSION='~> 8.1.0' bundle exec rake test_rails_integration
 ```
+
+## Test Structure
+
+- `test/omniauth_dropbox2_test.rb`: strategy/unit behavior
+- `test/rails_integration_test.rb`: full Rack/Rails request+callback flow
+- `test/test_helper.rb`: shared test bootstrap
 
 ## Compatibility
 

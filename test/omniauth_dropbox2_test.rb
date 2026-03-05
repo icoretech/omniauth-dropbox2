@@ -45,6 +45,29 @@ class OmniauthDropbox2Test < Minitest::Test
     assert_raw_info_post_call(token)
   end
 
+  def test_credentials_include_refresh_token_even_when_token_does_not_expire
+    strategy = build_strategy
+    token = FakeCredentialAccessToken.new(
+      token: 'access-token',
+      refresh_token: 'refresh-token',
+      expires_at: nil,
+      expires: false,
+      params: { 'scope' => 'files.metadata.read' }
+    )
+
+    strategy.define_singleton_method(:access_token) { token }
+
+    assert_equal(
+      {
+        'token' => 'access-token',
+        'refresh_token' => 'refresh-token',
+        'expires' => false,
+        'scope' => 'files.metadata.read'
+      },
+      strategy.credentials
+    )
+  end
+
   def test_callback_url_prefers_configured_value
     strategy = build_strategy
     callback = 'https://example.test/auth/dropbox/callback'
@@ -99,6 +122,26 @@ class OmniauthDropbox2Test < Minitest::Test
     def post(path, body: nil, headers: nil)
       @calls << { path: path, body: body, headers: headers }
       Struct.new(:parsed).new(@parsed_payload)
+    end
+  end
+
+  class FakeCredentialAccessToken
+    attr_reader :token, :refresh_token, :expires_at, :params
+
+    def initialize(token:, refresh_token:, expires_at:, expires:, params:)
+      @token = token
+      @refresh_token = refresh_token
+      @expires_at = expires_at
+      @expires = expires
+      @params = params
+    end
+
+    def expires?
+      @expires
+    end
+
+    def [](key)
+      { 'scope' => @params['scope'] }[key]
     end
   end
 end

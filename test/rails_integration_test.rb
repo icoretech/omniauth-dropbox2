@@ -14,7 +14,11 @@ require 'webmock/minitest'
 class RailsIntegrationSessionsController < ActionController::Base
   def create
     auth = request.env.fetch('omniauth.auth')
-    render json: { uid: auth['uid'], name: auth.dig('info', 'name') }
+    render json: {
+      uid: auth['uid'],
+      name: auth.dig('info', 'name'),
+      credentials: auth['credentials']
+    }
   end
 
   def failure
@@ -89,6 +93,10 @@ class RailsIntegrationTest < Minitest::Test
 
     assert_equal 'dbid:rails-user', payload['uid']
     assert_equal 'Rails Test User', payload['name']
+    assert_equal 'access-token', payload.dig('credentials', 'token')
+    assert_equal 'refresh-token', payload.dig('credentials', 'refresh_token')
+    assert_equal 'files.metadata.read', payload.dig('credentials', 'scope')
+    refute(payload.dig('credentials', 'expires'))
 
     assert_requested :post, 'https://api.dropboxapi.com/oauth2/token', times: 1
     assert_requested :post, 'https://api.dropboxapi.com/2/users/get_current_account', body: 'null', times: 1
@@ -100,7 +108,12 @@ class RailsIntegrationTest < Minitest::Test
     stub_request(:post, 'https://api.dropboxapi.com/oauth2/token').to_return(
       status: 200,
       headers: { 'Content-Type' => 'application/json' },
-      body: { access_token: 'access-token', token_type: 'bearer' }.to_json
+      body: {
+        access_token: 'access-token',
+        refresh_token: 'refresh-token',
+        scope: 'files.metadata.read',
+        token_type: 'bearer'
+      }.to_json
     )
   end
 
