@@ -12,7 +12,6 @@ end
 
 gem 'rails', ENV['RAILS_VERSION'] if ENV['RAILS_VERSION']
 
-gem 'bundler', '>= 2.5'
 gem 'minitest', '>= 5.20'
 gem 'rack-test', '>= 2.1'
 gem 'rake', '>= 13.1'
