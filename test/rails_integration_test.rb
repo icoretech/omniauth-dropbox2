@@ -91,7 +91,7 @@ class RailsIntegrationTest < Minitest::Test
     assert_equal 'Rails Test User', payload['name']
 
     assert_requested :post, 'https://api.dropboxapi.com/oauth2/token', times: 1
-    assert_requested :post, 'https://api.dropboxapi.com/2/users/get_current_account', body: '{}', times: 1
+    assert_requested :post, 'https://api.dropboxapi.com/2/users/get_current_account', body: 'null', times: 1
   end
 
   private
@@ -106,7 +106,7 @@ class RailsIntegrationTest < Minitest::Test
 
   def stub_dropbox_current_account
     stub_request(:post, 'https://api.dropboxapi.com/2/users/get_current_account')
-      .with(body: '{}')
+      .with(body: 'null')
       .to_return(
         status: 200,
         headers: { 'Content-Type' => 'application/json' },

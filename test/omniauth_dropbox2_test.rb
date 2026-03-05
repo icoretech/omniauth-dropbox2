@@ -85,7 +85,7 @@ class OmniauthDropbox2Test < Minitest::Test
   def assert_raw_info_post_call(token)
     assert_equal 1, token.calls.length
     assert_equal 'users/get_current_account', token.calls.first[:path]
-    assert_equal '{}', token.calls.first[:body]
+    assert_equal 'null', token.calls.first[:body]
   end
 
   class FakeAccessToken
