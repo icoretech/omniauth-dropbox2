@@ -1,5 +1,8 @@
 # OmniAuth Dropbox2 Strategy
 
+[![Test](https://github.com/icoretech/omniauth-dropbox2/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/icoretech/omniauth-dropbox2/actions/workflows/test.yml?query=branch%3Amain)
+[![Gem Version](https://img.shields.io/gem/v/omniauth-dropbox2.svg)](https://rubygems.org/gems/omniauth-dropbox2)
+
 `omniauth-dropbox2` provides a Dropbox OAuth2 strategy for OmniAuth.
 
 ## Installation
