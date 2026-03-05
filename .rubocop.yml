@@ -1,0 +1,25 @@
+plugins:
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'lib/omniauth-dropbox2.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'test/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'test/**/*'
+
+Style/OneClassPerFile:
+  Exclude:
+    - 'test/rails_integration_test.rb'
+
+Minitest/MultipleAssertions:
+  Exclude:
+    - 'test/rails_integration_test.rb'

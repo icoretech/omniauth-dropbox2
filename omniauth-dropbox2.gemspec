@@ -1,21 +1,34 @@
-# -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'omniauth-dropbox2/version'
+require 'omniauth/dropbox2/version'
 
-Gem::Specification.new do |gem|
-  gem.name          = "omniauth-dropbox2"
-  gem.version       = Omniauth::Box2::VERSION
-  gem.authors       = ["Claudio Poli"]
-  gem.email         = ["masterkain@gmail.com\n"]
-  gem.description   = %q{OmniAuth strategy for Dropbox using OAuth2}
-  gem.summary       = %q{OmniAuth strategy for Dropbox using OAuth2}
-  gem.homepage      = "https://github.com/masterkain/omniauth-dropbox2"
+Gem::Specification.new do |spec|
+  spec.name = 'omniauth-dropbox2'
+  spec.version = OmniAuth::Dropbox2::VERSION
+  spec.authors = ['Claudio Poli']
+  spec.email = ['masterkain@gmail.com']
 
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
+  spec.summary = 'OmniAuth strategy for Dropbox OAuth2 authentication.'
+  spec.description = 'OAuth2 strategy for OmniAuth that authenticates users with Dropbox and exposes account metadata.'
+  spec.homepage = 'https://github.com/icoretech/omniauth-dropbox2'
+  spec.license = 'MIT'
+  spec.required_ruby_version = '>= 3.2'
 
-  gem.add_dependency 'omniauth', '~> 1.0'
+  spec.metadata['source_code_uri'] = 'https://github.com/icoretech/omniauth-dropbox2'
+  spec.metadata['bug_tracker_uri'] = 'https://github.com/icoretech/omniauth-dropbox2/issues'
+  spec.metadata['changelog_uri'] = 'https://github.com/icoretech/omniauth-dropbox2/releases'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+
+  spec.files = Dir[
+    'lib/**/*.rb',
+    'README*',
+    'LICENSE*',
+    '*.gemspec'
+  ]
+  spec.require_paths = ['lib']
+
+  spec.add_dependency 'cgi', '>= 0.3.6'
+  spec.add_dependency 'omniauth-oauth2', '>= 1.8', '< 1.9'
 end
