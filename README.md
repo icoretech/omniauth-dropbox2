@@ -29,11 +29,50 @@ use OmniAuth::Builder do
 end
 ```
 
-Auth hash includes:
+## Auth Hash
 
-- `uid`: Dropbox `account_id`
-- `info[:name]`: Dropbox display name
-- `extra['raw_info']`: full response from `users/get_current_account`
+Example payload from `request.env['omniauth.auth']` (real flow shape, anonymized):
+
+```json
+{
+  "uid": "dbid:sample-account-id",
+  "info": {
+    "name": "Sample User"
+  },
+  "extra": {
+    "raw_info": {
+      "account_id": "dbid:sample-account-id",
+      "name": {
+        "given_name": "Sample",
+        "surname": "User",
+        "familiar_name": "Sample",
+        "display_name": "Sample User",
+        "abbreviated_name": "SU"
+      },
+      "email": "sample@example.test",
+      "email_verified": true,
+      "disabled": false,
+      "country": "IT",
+      "locale": "en",
+      "referral_link": "https://www.dropbox.com/referrals/AABsample",
+      "is_paired": false,
+      "account_type": {
+        ".tag": "basic"
+      },
+      "root_info": {
+        ".tag": "user",
+        "root_namespace_id": "123456",
+        "home_namespace_id": "123456"
+      }
+    }
+  }
+}
+```
+
+Notes:
+- `uid` is mapped from `raw_info.account_id`
+- `info.name` is mapped from `raw_info.name.display_name`
+- `extra.raw_info` is the full `users/get_current_account` response
 
 ## Development
 
