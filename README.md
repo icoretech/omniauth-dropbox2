@@ -1,4 +1,4 @@
-# OmniAuth Dropbox2 Strategy
+# OmniAuth Dropbox Strategy
 
 [![Test](https://github.com/icoretech/omniauth-dropbox2/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/icoretech/omniauth-dropbox2/actions/workflows/test.yml?query=branch%3Amain)
 [![Gem Version](https://badge.fury.io/rb/omniauth-dropbox2.svg)](https://badge.fury.io/rb/omniauth-dropbox2)
@@ -85,6 +85,7 @@ Example payload from `request.env['omniauth.auth']` (real flow shape, anonymized
 ```
 
 Notes:
+
 - `uid` is mapped from `raw_info.account_id`
 - `info.name` is mapped from `raw_info.name.display_name`
 - `credentials` includes `token`, plus `refresh_token` when provided by Dropbox
