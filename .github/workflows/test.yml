@@ -40,8 +40,8 @@ jobs:
           bundle config set frozen false
           bundle install --jobs 4 --retry 2
 
-      - name: Lint
-        run: bundle exec rake lint
+      - name: Standard
+        run: bundle exec standardrb
 
       - name: Strategy tests
         run: bundle exec rake test_unit

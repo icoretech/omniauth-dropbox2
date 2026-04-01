@@ -100,7 +100,7 @@ bundle exec rake
 
 The default Rake task runs:
 
-- `rake lint` (RuboCop)
+- `standardrb`
 - `rake test_unit` (strategy/unit Minitest suite)
 
 Run Rails integration tests with an explicit Rails version:
