@@ -2,6 +2,8 @@
 
 require_relative "test_helper"
 
+require "open3"
+
 class OmniauthDropbox2Test < Minitest::Test
   def build_strategy
     OmniAuth::Strategies::Dropbox.new(nil, "client-id", "client-secret")
@@ -99,8 +101,24 @@ class OmniauthDropbox2Test < Minitest::Test
     assert_equal "?prompt=consent", strategy.query_string
   end
 
-  def test_does_not_expose_wrong_omniauth_box2_namespace
-    assert_raises(NameError) { Omniauth::Box2::VERSION }
+  def test_public_entrypoints_expose_dropbox2_version
+    %w[
+      omniauth-dropbox2
+      omniauth/dropbox2
+      omniauth-dropbox2/version
+      omniauth/dropbox2/version
+    ].each do |entrypoint|
+      command = "require #{entrypoint.dump}; print OmniAuth::Dropbox2::VERSION"
+      stdout, stderr, process = Open3.capture3(
+        Gem.ruby,
+        "-I#{File.expand_path("../lib", __dir__)}",
+        "-e",
+        command
+      )
+
+      assert process.success?, "#{entrypoint} failed: #{stderr}"
+      assert_equal OmniAuth::Dropbox2::VERSION, stdout
+    end
   end
 
   private
